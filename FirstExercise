@@ -1,31 +1,52 @@
+<!---methods don’t know if the values used in the function changed so they need to run everytime to check.
+--computed properties know if the values used in the function changed so they don’t need to run everytime to check, only once!
+---Watch watches the data value and changes if dependant to other values
+-->
+
+
 <html>
 <script src="https://npmcdn.com/vue/dist/vue.js"></script>
 <body>
 <div id="exercise">
-    <!-- 1) Show an alert when the Button gets clicked -->
     <div>
-        <button v-on:click="alertMsg()">Show Alert</button>
+        <button v-on:click="counter++">Increase</button>
+		<button v-on:click="counter--">Decrease</button>
+	    <button v-on:click="secondCounter++">Increase</button>
+		 <button v-on:click="secondCounter--">Decrease</button>
     </div>
-    <!-- 2) Listen to the "keydown" event and store the value in a data property (hint: event.target.value gives you the value) -->
     <div>
-        <input type="text" v-on:keydown="value=$event.target.value">
-        <p>{{ value }}</p>
+        <p>{{ counter }} -second  {{secondCounter}}</p>
     </div>
-    <!-- 3) Adjust the example from 2) to only fire if the "key down" is the ENTER key -->
     <div>
-        <input type="text" v-on:keydown.enter="value=$event.target.value">
-        <p>{{ value }}</p>
+        <p>{{ result()}} -{{ output }}</p>
     </div>
 </div>
 <script>
 new Vue({
         el: '#exercise',
         data: {
-            value: ''
+            counter: 0,
+			secondCounter:0
         },
+		computed:{
+		output:function(){
+		console.log("computed");
+		return this.secondCounter>5?'Greater than 5' : 'Lesser than 5';
+		}
+		},
+		watch:{
+		counter:function(value){
+		var vm=this;
+		setTimeout(function(){
+		vm.counter=0;
+		vm.secondCounter=0;
+		},2000);
+		}
+		},
 		methods:{
-		alertMsg:function(){
-		alert("hey");
+		result:function(){
+		console.log("method");
+		return this.counter>5?'Greater than 5' : 'Lesser than 5';
 		}
 		}
     });
