@@ -1,0 +1,44 @@
+<!---methods don’t know if the values used in the function changed so they need to run everytime to check.
+--computed properties know if the values used in the function changed so they don’t need to run everytime to check, only once!-->
+
+
+<html>
+<script src="https://npmcdn.com/vue/dist/vue.js"></script>
+<body>
+<div id="exercise">
+    <div>
+        <button v-on:click="counter++">Increase</button>
+		<button v-on:click="counter--">Decrease</button>
+	    <button v-on:click="secondCounter++">Increase</button>
+		 <button v-on:click="secondCounter--">Decrease</button>
+    </div>
+    <div>
+        <p>{{ counter }} -second  {{secondCounter}}</p>
+    </div>
+    <div>
+        <p>{{ result()}} -{{ output }}</p>
+    </div>
+</div>
+<script>
+new Vue({
+        el: '#exercise',
+        data: {
+            counter: 0,
+			secondCounter:0
+        },
+		computed:{
+		output:function(){
+		console.log("computed");
+		return this.secondCounter>5?'Greater than 5' : 'Lesser than 5';
+		}
+		},
+		methods:{
+		result:function(){
+		console.log("method");
+		return this.counter>5?'Greater than 5' : 'Lesser than 5';
+		}
+		}
+    });
+</script>
+</body>
+</html>
